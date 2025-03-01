@@ -14,13 +14,13 @@ def get_weather() -> None:
         return
 
     CITY = "Paris"
-    COUNTRY = "FR"
-    BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+    COUNTRY = "France"
+    BASE_URL = "http://api.weatherapi.com/v1/current.json"
 
     params = {
-        "q": f"{CITY},{COUNTRY}",
-        "appid": API_KEY,
-        "units": "metric"
+        "key": API_KEY,
+        "q": CITY,
+        "aqi": "no"
     }
 
     try:
@@ -28,8 +28,8 @@ def get_weather() -> None:
         response.raise_for_status()
         data = response.json()
 
-        temp = data["main"]["temp"]
-        weather_desc = data["weather"][0]["description"].capitalize()
+        temp = data["current"]["temp_c"]
+        weather_desc = data["current"]["condition"]["text"]
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
 
         print(f"{CITY}/{COUNTRY} {current_time} Weather: {temp} Celsius, {weather_desc}")
